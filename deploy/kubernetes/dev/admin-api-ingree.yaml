@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: platform-api-ingress
+    namespace: hashrace-game
+    annotations:
+        kubernetes.io/ingress.global-static-ip-name: "hashrace-game-platform-api-static-ip"
+        networking.gke.io/managed-certificates: "platform-api-managed-cert"
+spec:
+    defaultBackend:
+        service:
+            name: platform-api-svc
+            port:
+                number: 3001

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>juheyouxi</title>
+    <link rel="shortcut icon" href="/unity/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="/unity/TemplateData/style.css">
+  </head>
+  <body>
+    <div id="tuanjie-container" class="tuanjie-desktop">
+      <canvas id="tuanjie-canvas" width=1334 height=750 tabindex="-1"></canvas>
+      <div id="tuanjie-loading-bar">
+        <div id="tuanjie-logo"></div>
+        <div id="tuanjie-progress-bar-empty">
+          <div id="tuanjie-progress-bar-full"></div>
+        </div>
+      </div>
+
+    </div>
+    <script>
+
+      var container = document.querySelector("#tuanjie-container");
+      var canvas = document.querySelector("#tuanjie-canvas");
+      var loadingBar = document.querySelector("#tuanjie-loading-bar");
+      var progressBarFull = document.querySelector("#tuanjie-progress-bar-full");
+
+      function unityShowBanner(msg, type) {
+        console.log(msg,type)
+      }
+
+
+      var buildUrl = "http://h5-game.jhkj.ddns.us/Build";
+      var loaderUrl = buildUrl + "/jhsz-web.loader.js";
+      var config = {
+        cacheControl: function (url) {
+          if (url.match(/\.data/) || url.match(/\.unity4d/)) {
+              return "must-revalidate";
+          }
+          return "no-store";
+        },
+        dataUrl: buildUrl + "/jhsz-web.data",
+        frameworkUrl: buildUrl + "/jhsz-web.framework.js",
+        codeUrl: buildUrl + "/jhsz-web.wasm",
+        symbolsUrl: buildUrl + "/jhsz-web.symbols.json",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "jhsz",
+        productName: "juheyouxi",
+        productVersion: "2.26.1",
+        showBanner: unityShowBanner,
+      };
+    
+      // config.matchWebGLToCanvasSize = false;
+      // config.autoSyncPersistentDataPath = true;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "tuanjie-mobile";
+        canvas.className = "tuanjie-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+        canvas.style.width = "1334px";
+        canvas.style.height = "750px";
+      }
+
+      canvas.style.background = "url('" + buildUrl + "/jhsz-web.jpg') center / cover";
+      loadingBar.style.display = "block";
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createTuanjieInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+              }).then((tuanjieInstance) => {
+				canvas.style.background = "url('" + buildUrl + "/jhsz-web.jpg') center / cover";
+                loadingBar.style.display = "none";
+              }).catch((message) => {
+                alert(message);
+              });
+            };
+
+      document.body.appendChild(script);
+
+    </script>
+  </body>
+</html>

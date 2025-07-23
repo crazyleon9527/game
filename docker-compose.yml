@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  rk-api:
+    container_name: rk-api 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./configs:/app/configs
+      - ./public:/app/public     
+      # - /root/web/game/jhsz-game-dist:/app/jhsz-game-dist
+    networks:
+      - api_network
+    command: ["web", "-c", "/app/configs/config-linux-dev.yaml"]
+
+networks:
+  api_network:
+    driver: bridge

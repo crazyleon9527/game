@@ -1,0 +1,5 @@
+{
+    "makefile.configureOnOpen": true,
+    "i18n-lazyer.fileSuffixes": ".vue,.ts,.tsx,.js,.jsx,.cs,.go",
+    "i18n-lazyer.jsonFileNames": "zh-CN,en-US,zh-TW"
+}

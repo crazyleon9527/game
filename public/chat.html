@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; gap: 20px; }
+        .section { border: 1px solid #ccc; padding: 15px; border-radius: 5px; }
+        #messages { height: 400px; width: 600px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; }
+        .input-group { margin: 10px 0; }
+        input[type="text"], textarea { width: 300px; padding: 5px; }
+        button { padding: 5px 15px; cursor: pointer; }
+        .online-users { width: 200px; }
+        .message { margin: 5px 0; padding: 5px; background-color: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Chat Room Test</h1>
+    
+    <!-- Connection Section -->
+    <div class="section">
+        <h3>Connection</h3>
+        <div class="input-group">
+            <input type="text" id="token" placeholder="JWT Token">
+            <button onclick="connectWebSocket()">Connect</button>
+        </div>
+        <div id="connectionStatus">Status: Disconnected</div>
+    </div>
+
+    <div class="container">
+        <!-- Channel List -->
+        <div class="section">
+            <h3>Channels</h3>
+            <button onclick="getChannelList()">Refresh Channels</button>
+            <div id="channelList"></div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="section">
+            <h3>Chat</h3>
+            <div id="messages"></div>
+            <div class="input-group">
+                <input type="text" id="channelId" placeholder="Channel ID">
+                <button onclick="joinChannel()">Join Channel</button>
+            </div>
+            <div class="input-group">
+                <textarea id="messageInput" placeholder="Type message..."></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            <div class="input-group">
+                <input type="file" id="fileInput" accept="image/*">
+                <button onclick="uploadImage()">Upload Image</button>
+            </div>
+        </div>
+
+        <!-- Online Users -->
+        <div class="section online-users">
+            <h3>Online Users</h3>
+            <div id="onlineUsers"></div>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        const API_BASE = 'http://localhost:3001/api/chat';
+        
+        // WebSocket Handling
+        function connectWebSocket() {
+            const token = document.getElementById('token').value;
+            if (!token) {
+                alert('Please enter JWT token');
+                return;
+            }
+
+            ws = new WebSocket(`ws://localhost:3001/api/chat/ws?token=${token}`);
+            
+            ws.onopen = () => {
+                updateStatus('Connected');
+                getChannelList();
+            };
+
+            ws.onmessage = (event) => {
+                console.log('WebSocket message:', event.data);
+                addMessage(event.data);
+            };
+
+            ws.onclose = () => {
+                updateStatus('Disconnected');
+                setTimeout(() => connectWebSocket(), 5000); // Reconnect
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                updateStatus('Error');
+            };
+        }
+
+        // API Calls
+        async function getChannelList() {
+            const response = await fetch(`${API_BASE}/get-channel-list`, {
+                method: 'POST',
+                headers: getAuthHeaders()
+            });
+            
+            const resp = await response.json();
+            channels = resp.data;
+            console.log("channels: ", channels);
+            const channelList = document.getElementById('channelList');
+            channelList.innerHTML = channels.map(c => 
+                `<div>${c.id}: ${c.name}</div>`
+            ).join('');
+        }
+
+        async function joinChannel() {
+            const channelId = document.getElementById('channelId').value;
+            await fetch(`${API_BASE}/join-channel`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ channel: channelId })
+            });
+        }
+
+        async function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            const channel = document.getElementById('channelId').value;
+            console.log("message: ", message);
+            await fetch(`${API_BASE}/send-message`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
+                    receiverID: 0, // Adjust as needed
+                    channel: String(channel),
+                    content: message,
+                    type: "text" // 1 for text
+                })
+            });
+            
+            document.getElementById('messageInput').value = '';
+        }
+
+        async function uploadImage() {
+            const file = document.getElementById('fileInput').files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            await fetch(`${API_BASE}/upload`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: formData
+            });
+        }
+
+        // Helpers
+        function getAuthHeaders() {
+            const token = document.getElementById('token').value;
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        function addMessage(message) {
+            const messagesDiv = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function updateStatus(status) {
+            document.getElementById('connectionStatus').textContent = `Status: ${status}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+ServiceSettings:
+  ListenAddress:  0.0.0.0:3001  #
+  StaticPath: './public/'   #静态目录
+  Timezone: 'Asia/Kolkata' #时区'Asia/Shanghai'
+  JwtSignKey: 'julier@landing2023' #jwt授权签名
+  TokenExpireTime: 1 #1小时
+  TokenRefreshTime: 48 # 2天
+  EnableCors: true #是否开启跨域
+  VerificationType: 1 # 1短信,2邮箱
+  Language: 'en-US' #默认语言 locale
+  Area: 'cn' #区域
+  TrustedUserCode: 9418 #内部验证码
+  Environment: 'debug' # 或者 'production'
+  OAuth2CallbackHost: 'http://localhost:3001'  # 回调地址
+  EnablePprof: true #是否中注册性能分析
+  EnableWingo: false  #是否开启wingo
+  EnableNine: false  #是否开启nine
+  EnableTask: true  #是否开启任务列表
+  EnableMQ:  true   #是否开启消息队列接受
+  EnableSwagger: true #是否开启swagger文档
+
+DBSettings:
+  Driver: 'mysql'
+  DataSource: 'happy:123456@tcp(localhost:3306)/cash_game?charset=utf8mb4&parseTime=True&loc=Local'
+  DataSourceReplicas: [] #从库
+  DataSourceSearchReplicas: [] #读库
+  MaxIdleConns: 100          
+  MaxOpenConns: 200     
+  EnableAutoMigrate: true #migrate tables    
+  Trace: false        
+  AtRestEncryptKey: 
+  QueryTimeout: 30
+
+RDBSettings:
+  DataSource: '127.0.0.1:6379'
+  Password: '123456'
+  DB: 0
+  PoolSize: 10
+  MinIdleConns: 5
+  MaxConnAge: 60
+  PoolTimeout: 30
+  IdleTimeout : 5
+  
+StorageSettings:
+  Endpoint: "storage.jhkj.ddns.us"
+  AccessKey: "admin"
+  SecretKey: "password123"
+  UseSSL: false
+ 
+
+TelegramSetting:
+  ApiToken: '7033519352:AAHyLsBtt9iDU60lw1xx07mp2UA3lGv1Irw'  # StarlightEcho2024Bot
+  Proxy:
+  ManagerID: 6657139894
+
+ZfSetting:
+  ApiUrl: 'https://open-api.t1games.app/gameapi/v2'
+  AppID: 'dxicpnFJLpuxBynTpCDmj'
+  AppSecret: 'uwXRJC7u3ZwO35pH8jp7a'
+  SignSecret: 'LNr1uLjqfGchHC92DerB3'
+
+JhszSetting:
+  ApiUrl: 'http://127.0.0.1:18082'
+  AppID: '1001'
+  AppSecret: 'uwXRJC7u3ZwO35pH8jp7a'
+  SignSecret: 'aabd4b0a9598fe80eae2eb922aee2f58'
+
+R8Setting:
+  ApiUrl: 'https://betacenter.ark8899.com/v2/platform'
+  AppID: 'pinr_XIST'
+  AppKey: 'mbLxeU58viyMGjjbKxzd8r1zXu0diiii'
+
+QuizSetting:
+  EventLimit: 1
+  EventStartOffset: 5
+  EventEndOffsetMin: 5
+  EventEndOffsetMax: 10
+  ClobEndpoint: 'https://clob.polymarket.com'
+  GammaEndpoint: 'https://gamma-api.polymarket.com'
+
+# ChainSetting:
+#   ChainGameHost: 'http://realm-game.jhkj.ddns.us'
+#   GameURL: 'http://h5-game.jhkj.ddns.us/'
+
+# ChainSetting:
+#   ChainGameHost: 'http://127.0.0.1:18082'
+#   GameURL: 'http://h5-game.jhkj.ddns.us/'

@@ -1,0 +1,4452 @@
+basePath: /
+definitions:
+  entities.Activity:
+    properties:
+      description:
+        description: 活动描述
+        type: string
+      end_time:
+        description: 活动结束时间
+        type: integer
+      id:
+        type: integer
+      name:
+        description: 活动名字
+        type: string
+      priority:
+        description: 活动优先级 (较高数字表示较高优先级)
+        type: integer
+      promotion_image:
+        description: 活动宣传图 URL
+        type: string
+      start_time:
+        description: 活动开始时间
+        type: integer
+      status:
+        description: 活动激活状态 (例如 "active", "inactive", "paused")
+        type: integer
+      title:
+        description: 活动标题
+        type: string
+    type: object
+  entities.AddWithdrawCardReq:
+    properties:
+      accountNumber:
+        type: string
+      address:
+        type: string
+      city:
+        type: string
+      email:
+        type: string
+      ifsc:
+        type: string
+      mobile:
+        type: string
+      name:
+        type: string
+      state:
+        type: string
+      uid:
+        type: integer
+      verCode:
+        type: string
+    type: object
+  entities.ApplyForWithdrawalReq:
+    properties:
+      cash:
+        type: number
+      uid:
+        type: integer
+      verifyCode:
+        description: 暂时不需要
+        type: string
+    type: object
+  entities.Banner:
+    properties:
+      id:
+        type: integer
+      image:
+        description: 图片
+        type: string
+      jumpURL:
+        description: 跳转 URL
+        type: string
+      priority:
+        description: 优先级 (较高数字表示较高优先级)
+        type: integer
+      status:
+        description: 状态 0 1
+        type: integer
+      title:
+        description: 活动标题
+        type: string
+    type: object
+  entities.BindEmailReq:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+    required:
+    - code
+    - email
+    type: object
+  entities.BindTelegramReq:
+    properties:
+      telegram:
+        type: string
+    required:
+    - telegram
+    type: object
+  entities.BlockchainToken:
+    properties:
+      active:
+        description: 是否激活（例如：是否允许交易）
+        type: boolean
+      blockchain_type:
+        description: 区块链类型（如 Ethereum, TRON 等）
+        type: string
+      contract_address:
+        description: 代币合约地址（如 ERC-20 或 TRC-20 地址）
+        type: string
+      description:
+        description: 代币描述（例如：USDT 在 TRON 测试网上的实现）
+        type: string
+      fee:
+        description: 手续费（例如：每笔交易约 0.1 TRX）
+        type: string
+      id:
+        type: integer
+      token_name:
+        description: 代币名称（如 Tether）
+        type: string
+      token_symbol:
+        description: 代币类型（如 USDT、ETH）
+        type: string
+      transaction_speed:
+        description: 交易速度（例如：约 3-5 秒）
+        type: string
+    required:
+    - token_symbol
+    type: object
+  entities.CancelCrashGameBetReq:
+    properties:
+      bet_index:
+        description: RoundID uint64 `json:"round_id" binding:"required,gt=0"` // 回合id
+        type: integer
+    type: object
+  entities.ChangePasswordCredentials:
+    properties:
+      confirm_password:
+        description: 确认密码，确保和新密码相同
+        type: string
+      newPassword:
+        description: 新密码，这里假设密码长度应在6到30个字符之间
+        maxLength: 30
+        minLength: 6
+        type: string
+      password:
+        description: 旧密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    required:
+    - confirm_password
+    - newPassword
+    - password
+    - username
+    type: object
+  entities.ChatChannel:
+    properties:
+      active:
+        description: 是否活跃
+        type: integer
+      id:
+        type: integer
+      language:
+        description: '"zh-CN", "en-US"'
+        type: string
+      name:
+        type: string
+    type: object
+  entities.ChatMessage:
+    properties:
+      channel:
+        description: 群聊时使用
+        type: string
+      content:
+        description: 消息内容
+        type: string
+      id:
+        type: integer
+      receiverId:
+        description: 单聊时使用
+        type: integer
+      senderId:
+        type: integer
+      type:
+        description: '"text", "image"'
+        type: string
+    type: object
+  entities.CrashGameOrder:
+    properties:
+      auto_escape_height:
+        description: 自动逃跑高度
+        type: number
+      bet_amount:
+        description: 投注金额
+        type: number
+      bet_index:
+        description: 投注索引
+        type: integer
+      bet_time:
+        description: 投注时间
+        type: integer
+      delivery:
+        description: 下注减抽水
+        type: number
+      end_time:
+        description: 单的应完成结算时间
+        type: integer
+      escape_height:
+        description: 逃跑高度
+        type: number
+      escape_time:
+        description: 逃跑时间
+        type: integer
+      fee:
+        description: 抽水
+        type: number
+      id:
+        type: integer
+      name:
+        description: 用户名
+        type: string
+      order_id:
+        description: 临时orderID，不存储到数据库
+        type: string
+      reward_amount:
+        description: 中奖金额
+        type: number
+      round_id:
+        description: 轮数：每进行一局，轮数+1
+        type: integer
+      status:
+        description: 0 未结算 1 已结算 2 已取消
+        type: integer
+      uid:
+        description: 用户ID 注意索引的名称和排序字段
+        type: integer
+    type: object
+  entities.CrashGameOrderNotify:
+    properties:
+      bet_amount:
+        description: 投注金额
+        type: number
+      bet_index:
+        description: 投注索引
+        type: integer
+      bet_time:
+        description: 投注时间
+        type: integer
+      escape_height:
+        description: 逃跑高度
+        type: number
+      escape_time:
+        description: 逃跑时间
+        type: integer
+      name:
+        description: 用户名
+        type: string
+      notify_type:
+        description: 类型  order:下注 round:回合
+        type: string
+      reward_amount:
+        description: 中奖金额
+        type: number
+      round_id:
+        description: 回合id
+        type: integer
+      status:
+        description: 状态  bet:下注 escape:逃跑
+        type: string
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  entities.DiceGameChangeSeedReq:
+    properties:
+      client_seed:
+        description: 客户端种子
+        type: string
+    type: object
+  entities.DiceGameChangeSeedRsp:
+    properties:
+      client_seed:
+        description: 客户端种子
+        type: string
+      open_hash:
+        description: 提前公布的hash
+        type: string
+    type: object
+  entities.DiceGameGetOrderListReq:
+    type: object
+  entities.DiceGamePlaceBetReq:
+    properties:
+      bet_amount:
+        type: number
+      is_above:
+        description: 是否大于 1:大于 0:小于
+        type: integer
+      target:
+        type: number
+    required:
+    - bet_amount
+    - target
+    type: object
+  entities.DiceGameState:
+    properties:
+      bet_amount:
+        description: 投注金额
+        type: number
+      bet_time:
+        description: 投注时间
+        type: integer
+      client_seed:
+        description: 客户端种子
+        type: string
+      end_time:
+        description: 单的完成结算时间
+        type: integer
+      is_above:
+        description: 是否大于 1:大于 0:小于
+        type: integer
+      multiple:
+        description: 倍数
+        type: number
+      open_hash:
+        description: 提前公布的hash
+        type: string
+      result:
+        description: 结果值
+        type: number
+      reward_amount:
+        description: 中奖金额
+        type: number
+      round_id:
+        description: 轮数
+        type: integer
+      server_seed:
+        description: 服务端种子
+        type: string
+      settled:
+        description: 是否已结算
+        type: integer
+      target:
+        description: 目标值
+        type: number
+    type: object
+  entities.EditAvatarReq:
+    properties:
+      avatar:
+        type: string
+    required:
+    - avatar
+    type: object
+  entities.EditNicknameReq:
+    properties:
+      gender:
+        type: integer
+      nickname:
+        type: string
+    required:
+    - nickname
+    type: object
+  entities.EnableWalletPasswordReq:
+    properties:
+      password:
+        description: 密码
+        type: string
+    required:
+    - password
+    type: object
+  entities.EscapeCrashGameBetReq:
+    properties:
+      bet_index:
+        description: RoundID      uint64  `json:"round_id" binding:"required,gt=0"`
+          // 回合id
+        type: integer
+      escape_height:
+        type: number
+      escape_time:
+        type: integer
+    required:
+    - escape_height
+    - escape_time
+    type: object
+  entities.FairCheckReq:
+    properties:
+      block_hash:
+        description: 区块hash
+        type: string
+      client_seed:
+        description: 客户端随机种子
+        type: string
+      ext:
+        additionalProperties:
+          type: string
+        description: 扩展参数
+        type: object
+      game:
+        description: 游戏名称 "Crash","Mine"
+        type: string
+      open_hash:
+        description: 提前公布的hash
+        type: string
+      server_seed:
+        description: 服务端随机种子
+        type: string
+    type: object
+  entities.FairCheckRsp:
+    properties:
+      result:
+        type: number
+      result_json:
+        type: string
+    type: object
+  entities.FinancialSummary:
+    properties:
+      cs_game:
+        description: 代理用户 投注游戏佣金
+        type: number
+      cs_recharge:
+        description: 代理用户 充值佣金
+        type: number
+      interest:
+        description: 利息收益
+        type: number
+      pc:
+        description: 所属推销码
+        type: integer
+      recharge:
+        description: 充值金额
+        type: number
+      redPacket:
+        description: 红包金额
+        type: number
+      uid:
+        type: integer
+      withdraw:
+        description: 提现金额
+        type: number
+    type: object
+  entities.Flow:
+    properties:
+      balance:
+        type: number
+      currency:
+        type: string
+      isRobot:
+        type: integer
+      number:
+        type: number
+      pc:
+        type: integer
+      remark:
+        type: string
+      type:
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.Game:
+    properties:
+      category:
+        description: 游戏类别（公司棋牌、区块链、外接游戏等），限制为64字符
+        type: string
+      company_logo_url:
+        description: 游戏公司logo地址
+        type: string
+      description:
+        description: 游戏描述，限制为1024个字符
+        type: string
+      game_code:
+        description: 游戏代号，限制为64字符
+        type: string
+      gameplay_type:
+        description: 游戏玩法类型，限制为64字符
+        type: string
+      icon_url:
+        description: 游戏图标地址
+        type: string
+      id:
+        type: integer
+      is_active:
+        description: 是否上架
+        type: boolean
+      is_deleted:
+        description: 是否删除
+        type: boolean
+      language:
+        description: 游戏支持的语言类型
+        type: string
+      name:
+        description: 游戏名
+        type: string
+      online_count:
+        description: 当前在线玩家数
+        type: integer
+      popularity:
+        description: 游戏热度
+        type: integer
+      priority:
+        description: 游戏优先级(较高数字表示较高优先级)
+        type: integer
+      rating:
+        description: 游戏评分（0到10的评分，保留两位小数）
+        type: number
+      service_status:
+        description: 服务状态
+        type: integer
+    type: object
+  entities.GameCategoryStats:
+    properties:
+      bet_amount:
+        description: 投注额
+        type: number
+      bet_count:
+        description: 投注单数
+        type: integer
+      category:
+        description: 游戏类别（公司棋牌、区块链、外接游戏等）
+        type: string
+      profit:
+        description: 盈亏
+        type: number
+    type: object
+  entities.GameProfitStats:
+    properties:
+      game:
+        description: 游戏名
+        type: string
+      total_profit:
+        description: 游戏盈利总额
+        type: number
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  entities.GameRebateReceipt:
+    properties:
+      cash:
+        type: number
+      receiveTime:
+        description: 领取时间
+        type: integer
+      status:
+        description: 1已审核
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.GameRecord:
+    properties:
+      amount:
+        description: 有效流水
+        type: number
+      bet_amount:
+        description: 投注金额
+        type: number
+      bet_time:
+        description: 下注时间
+        type: string
+      category:
+        description: 分类字段
+        type: string
+      currency:
+        description: 货币类型
+        type: string
+      game:
+        description: 游戏名
+        type: string
+      id:
+        type: integer
+      pc:
+        description: 所属推销码
+        type: integer
+      profit:
+        description: 盈亏
+        type: number
+      record_id:
+        description: 唯一记录ID
+        type: string
+      status:
+        description: 是否0:未结算 1:已结算 2:已返利
+        type: integer
+      uid:
+        description: // 用户ID
+        type: integer
+    type: object
+  entities.GameRefresh:
+    properties:
+      game_code:
+        description: 游戏编码
+        type: string
+      online_count:
+        type: integer
+    type: object
+  entities.GameStats:
+    properties:
+      total_bet_amount:
+        description: 总投注额
+        type: number
+      total_bet_count:
+        description: 总投注单数
+        type: integer
+      total_profit:
+        description: 总输赢
+        type: number
+    type: object
+  entities.GetBlockchainTokenReq:
+    properties:
+      chain_type:
+        description: 区块链类型
+        type: string
+      token_symbol:
+        description: 代币类型
+        type: string
+    type: object
+  entities.GetCategoryStatsListReq:
+    properties:
+      category:
+        description: 游戏类别
+        type: string
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.GetCrashGameRoundListReq:
+    type: object
+  entities.GetCrashGameRoundListRsp:
+    properties:
+      average_escape_altitude:
+        description: 平均逃跑高度
+        type: number
+      list:
+        description: 回合
+        items:
+          $ref: '#/definitions/entities.GetCrashGameRoundRsp'
+        type: array
+    type: object
+  entities.GetCrashGameRoundOrderListReq:
+    properties:
+      round_id:
+        description: 回合id，默认为空获取最新回合
+        type: integer
+    type: object
+  entities.GetCrashGameRoundReq:
+    properties:
+      round_id:
+        description: 回合id，默认为空获取最新回合
+        type: integer
+    type: object
+  entities.GetCrashGameRoundRsp:
+    properties:
+      crash_multi:
+        description: 爆炸倍数
+        type: number
+      current_status_time:
+        description: 当前状态时间
+        type: integer
+      current_time:
+        description: 当前时间
+        type: integer
+      extreme_altitude:
+        description: 极限高度 用户昵称，已结算的回合才有值
+        type: number
+      hash:
+        description: 哈希值
+        type: string
+      notify_type:
+        description: 类型  order:下注 round:回合
+        type: string
+      open_hash:
+        description: 提前公布的哈希值：由哈希值，通过sha256算法生成，会提前公布给用户
+        type: string
+      round_id:
+        description: 回合id
+        type: integer
+      server_seed:
+        description: 服务器种子
+        type: string
+      settled:
+        description: 是否已结算
+        type: integer
+      status:
+        description: '状态: preparing:准备,上一局结算时间5.5s betting:下注7s flying:飞行,具体时间根据爆炸倍数计算
+          settling:结算 completed:已完成'
+        type: string
+      ultimate_escaper:
+        description: 最终逃跑者 用户昵称，已结算的回合才有值
+        type: string
+    type: object
+  entities.GetFlowListReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.GetGameListReq:
+    properties:
+      category:
+        type: string
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      status:
+        type: integer
+    type: object
+  entities.GetGameRebateReceiptListReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.GetGameRecordListReq:
+    properties:
+      category:
+        description: 游戏类别
+        type: string
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.GetGamerDailyStatsListReq:
+    properties:
+      count:
+        type: integer
+      currency:
+        description: 货币类型
+        type: string
+      date_type:
+        description: 日期类型  (1d,7d,30d)
+        type: string
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.GetGamerDailyStatsListRsp:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      stat:
+        $ref: '#/definitions/entities.GameStats'
+    type: object
+  entities.GetMessageHistoryReq:
+    properties:
+      channel:
+        type: string
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.GetNotificationListReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.GetPeriodHistoryListReq:
+    properties:
+      betType:
+        description: 房间类型，可以为空
+        type: integer
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    required:
+    - betType
+    type: object
+  entities.GetPromotionListReq:
+    properties:
+      count:
+        type: integer
+      level:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.GetRechargeOrderListReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.GetRechargeUrlReq:
+    properties:
+      actType:
+        description: 活动类型
+        type: integer
+      cash:
+        type: number
+      name:
+        type: string
+      uid:
+        type: integer
+    type: object
+  entities.GetRedEnvelopeReq:
+    properties:
+      red_name:
+        type: string
+      type:
+        minimum: 0
+        type: integer
+      uid:
+        type: integer
+    required:
+    - red_name
+    type: object
+  entities.GetTransactionListReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.GetUserCrashGameOrderListReq:
+    type: object
+  entities.GetUserCrashGameOrderListRsp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/entities.CrashGameOrder'
+        type: array
+      total_bet_amount:
+        description: 总下注金额
+        type: number
+      total_reward_amount:
+        description: 总中奖金额
+        type: number
+    type: object
+  entities.GetUserCrashGameOrderReq:
+    properties:
+      round_id:
+        description: 回合id，默认为空获取最新回合
+        type: integer
+    type: object
+  entities.GetWalletAddressReq:
+    properties:
+      chain_type:
+        description: 区块链类型
+        type: string
+      token_symbol:
+        description: 代币类型
+        type: string
+    type: object
+  entities.HallInviteRelation:
+    properties:
+      level:
+        type: integer
+      mobile:
+        type: string
+      pid:
+        type: integer
+      return_cash:
+        type: number
+      uid:
+        type: integer
+    type: object
+  entities.HallWithdrawRecord:
+    properties:
+      accountName:
+        description: 账户名
+        type: string
+      accountNumber:
+        description: 账户号码
+        type: string
+      cash:
+        description: 提现金额
+        type: number
+      channel:
+        description: 渠道
+        type: string
+      finish_time:
+        description: 订单结束时间
+        type: integer
+      give_time:
+        description: 打款时间
+        type: integer
+      ifsc:
+        description: IFSC码 Indian Financial System Code 指定银行分行
+        type: string
+      orderID:
+        description: 订单号
+        type: string
+      start_time:
+        description: 订单发起时间
+        type: integer
+      status:
+        description: 状态 0待审核 1通过 2驳回 3打款成功 4打款失败
+        type: integer
+    type: object
+  entities.HashSDBetRequest:
+    properties:
+      bet_amount:
+        type: number
+      bet_type:
+        description: 房间类型 1 初级 2 中级 3 高级
+        type: integer
+      prediction:
+        description: 1:单双 (1:单 2:双)  2:大小 (1:小 2:大)  3:bullbull (1:庄牛牛 2:闲牛牛 3:庄牛九
+          4:闲牛九 5:庄赢 6:闲赢)  4:lucky (1:不中 2:中)  5:banker player tie (1:庄 2:闲 3:和)
+        type: integer
+    required:
+    - bet_amount
+    - bet_type
+    type: object
+  entities.IDReq:
+    properties:
+      id:
+        type: integer
+    type: object
+  entities.JhszGameLoginReq:
+    properties:
+      HomeLink:
+        type: string
+      Language:
+        type: string
+      deviceId:
+        type: string
+      deviceOS:
+        type: string
+      gameCode:
+        type: string
+      ip:
+        type: string
+      roomId:
+        type: string
+      uid:
+        type: integer
+    type: object
+  entities.JoinChannelReq:
+    properties:
+      channel:
+        type: string
+    type: object
+  entities.LimboGameChangeSeedReq:
+    properties:
+      client_seed:
+        description: 客户端种子
+        type: string
+    type: object
+  entities.LimboGameChangeSeedRsp:
+    properties:
+      client_seed:
+        description: 客户端种子
+        type: string
+      open_hash:
+        description: 提前公布的hash
+        type: string
+    type: object
+  entities.LimboGameGetOrderListReq:
+    type: object
+  entities.LimboGamePlaceBetReq:
+    properties:
+      bet_amount:
+        type: number
+      is_above:
+        description: 是否大于 1:大于 0:小于
+        type: integer
+      target:
+        type: number
+    required:
+    - bet_amount
+    - target
+    type: object
+  entities.LimboGameState:
+    properties:
+      bet_amount:
+        description: 投注金额
+        type: number
+      bet_time:
+        description: 投注时间
+        type: integer
+      client_seed:
+        description: 客户端种子
+        type: string
+      end_time:
+        description: 单的完成结算时间
+        type: integer
+      is_above:
+        description: 是否大于 1:大于 0:小于
+        type: integer
+      multiple:
+        description: 倍数
+        type: number
+      open_hash:
+        description: 提前公布的hash
+        type: string
+      result:
+        description: 结果值
+        type: number
+      reward_amount:
+        description: 中奖金额
+        type: number
+      round_id:
+        description: 轮数
+        type: integer
+      server_seed:
+        description: 服务端种子
+        type: string
+      settled:
+        description: 是否已结算
+        type: integer
+      target:
+        description: 目标值
+        type: number
+    type: object
+  entities.LoginCredentials:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  entities.Logo:
+    properties:
+      id:
+        type: integer
+      image:
+        description: 图片
+        type: string
+      jumpURL:
+        description: 跳转 URL
+        type: string
+      priority:
+        description: 优先级 (较高数字表示较高优先级)
+        type: integer
+      status:
+        description: 状态 0 1
+        type: integer
+      title:
+        description: 活动标题
+        type: string
+      type:
+        description: 类型 1.平台主界面左上角 2.平台跳转游戏加载页 3.游戏加载页)
+        type: integer
+    type: object
+  entities.MineGameCashoutReq:
+    type: object
+  entities.MineGameChangeSeedReq:
+    properties:
+      client_seed:
+        description: 客户端种子
+        type: string
+    type: object
+  entities.MineGameChangeSeedRsp:
+    properties:
+      client_seed:
+        description: 客户端种子
+        type: string
+      open_hash:
+        description: 提前公布的hash
+        type: string
+    type: object
+  entities.MineGameGetOrderListReq:
+    type: object
+  entities.MineGameGetStateReq:
+    type: object
+  entities.MineGameOpenPositionReq:
+    properties:
+      open_position:
+        type: integer
+    type: object
+  entities.MineGamePlaceBetReq:
+    properties:
+      bet_amount:
+        type: number
+      mine_count:
+        type: integer
+    required:
+    - bet_amount
+    - mine_count
+    type: object
+  entities.MineGamePosition:
+    properties:
+      multiple:
+        type: number
+      position:
+        type: integer
+    type: object
+  entities.MineGameState:
+    properties:
+      bet_amount:
+        description: 投注金额
+        type: number
+      bet_time:
+        description: 投注时间
+        type: integer
+      client_seed:
+        description: 客户端种子
+        type: string
+      diamond_left:
+        description: 剩余钻石个数
+        type: integer
+      end_time:
+        description: 单的完成结算时间
+        type: integer
+      mine_count:
+        description: 地雷个数
+        type: integer
+      mine_position:
+        description: 地雷位置json 0-24  [17,5,2]
+        items:
+          type: integer
+        type: array
+      multiple:
+        description: 倍数
+        type: number
+      open_hash:
+        description: 提前公布的hash
+        type: string
+      open_position:
+        description: '开启的位置json 0-24  [{"position": 17,"multiple":1.13}]'
+        items:
+          $ref: '#/definitions/entities.MineGamePosition'
+        type: array
+      reward_amount:
+        description: 中奖金额
+        type: number
+      round_id:
+        description: 轮数
+        type: integer
+      server_seed:
+        description: 服务端种子
+        type: string
+      settled:
+        description: 是否已结算
+        type: integer
+      status:
+        description: '状态 : preparing:准备 playing:进行中 gameover:游戏结束'
+        type: string
+    type: object
+  entities.MobileLoginCredentials:
+    properties:
+      mobile:
+        type: string
+      verCode:
+        description: 验证码，这里假设是6位数的验证码
+        type: string
+    required:
+    - mobile
+    - verCode
+    type: object
+  entities.OAuthLoginReq:
+    properties:
+      extra:
+        description: 第三方登录成功后跳转地址携带参数
+        example: ""
+        type: string
+      plat:
+        description: 第三方平台(google,facebook,twister,github[可用])
+        example: github
+        type: string
+      redirect_url:
+        description: 第三方登录成功后跳转地址
+        example: https://www.baidu.com
+        type: string
+    required:
+    - plat
+    type: object
+  entities.Paginator:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.PlaceCrashGameBetReq:
+    properties:
+      auto_escape_height:
+        type: number
+      bet_amount:
+        type: number
+      bet_index:
+        description: RoundID          uint64  `json:"round_id" binding:"required,gt=0"`
+          // 回合id
+        type: integer
+    required:
+    - bet_amount
+    type: object
+  entities.PlatSetting:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      min_withdrawal:
+        description: 最小提现额
+        type: number
+      name:
+        type: string
+      price:
+        type: integer
+      updated_at:
+        type: string
+      usd_exchange_rate:
+        description: 美元汇率
+        type: number
+    type: object
+  entities.PromotionProfit:
+    properties:
+      code:
+        description: 邀请码
+        type: string
+      has_get:
+        description: 已经领取的
+        type: number
+      invite_count:
+        description: 总邀请数
+        type: integer
+      level_map:
+        additionalProperties:
+          type: integer
+        description: 每个级别拥有的人数
+        type: object
+      not_get:
+        description: 未领取的
+        type: number
+      today_link:
+        description: 今日邀请数
+        type: integer
+      today_valid_bet:
+        description: 今日有效投注
+        type: number
+      total_valid_bet:
+        description: 总有效投注
+        type: number
+    type: object
+  entities.QuizBuyRecord:
+    properties:
+      delivery:
+        description: 下注减抽水
+        type: number
+      eventID:
+        description: 事件ID
+        type: integer
+      fee:
+        description: 抽水
+        type: number
+      groupItemTitle:
+        description: 市场名称标题
+        type: string
+      icon:
+        description: 事件图标
+        type: string
+      isSettle:
+        description: 是否已结算
+        type: integer
+      isWin:
+        description: 是否赢
+        type: integer
+      isYes:
+        description: 是否购买Yes
+        type: integer
+      marketID:
+        description: 市场ID
+        type: integer
+      payMoney:
+        description: 购买金额
+        type: number
+      price:
+        description: 购买赔率
+        type: number
+      settleMoney:
+        description: 结算金额
+        type: number
+      settleTime:
+        description: 结算时间
+        type: integer
+      startTime:
+        description: 购买时间
+        type: integer
+      title:
+        description: 事件标题
+        type: string
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  entities.QuizBuyRecordReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.QuizBuyReq:
+    properties:
+      event_id:
+        description: 事件ID
+        type: integer
+      is_yes:
+        description: 是否购买Yes
+        type: integer
+      market_id:
+        description: 市场ID
+        type: integer
+      pay_money:
+        description: 购买金额
+        type: number
+    required:
+    - event_id
+    - market_id
+    - pay_money
+    type: object
+  entities.QuizInfoItem:
+    properties:
+      groupItemTitle:
+        description: 市场名称标题
+        type: string
+      isYesWinner:
+        description: 结算是否Yes赢
+        type: boolean
+      marketID:
+        description: 市场ID
+        type: integer
+      noPrice:
+        description: No市场赔率
+        type: number
+      ratio:
+        description: 市场比例 两位百分比
+        type: integer
+      yesPrice:
+        description: Yes市场赔率
+        type: number
+    type: object
+  entities.QuizInfoRsp:
+    properties:
+      closeAt:
+        description: 事件结束时间
+        type: integer
+      eventID:
+        description: 事件ID
+        type: integer
+      icon:
+        description: 事件图标
+        type: string
+      isClosed:
+        description: 事件是否关闭
+        type: boolean
+      markets:
+        description: 竞猜信息单个市场选项
+        items:
+          $ref: '#/definitions/entities.QuizInfoItem'
+        type: array
+      title:
+        description: 事件问题
+        type: string
+      volume:
+        description: 事件成交量
+        type: number
+    type: object
+  entities.QuizListReq:
+    properties:
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+    type: object
+  entities.QuizMarketPricesHistoryReq:
+    properties:
+      event_id:
+        description: 事件ID
+        type: integer
+      market_id:
+        description: 市场ID
+        type: integer
+    required:
+    - event_id
+    - market_id
+    type: object
+  entities.QuizPricesHistoryDataItem:
+    properties:
+      p:
+        type: number
+      t:
+        type: integer
+    type: object
+  entities.QuizPricesHistoryReq:
+    properties:
+      event_id:
+        type: integer
+    required:
+    - event_id
+    type: object
+  entities.QuizPricesHistoryRsp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/entities.QuizPricesHistoryRspItem'
+        type: array
+    type: object
+  entities.QuizPricesHistoryRspItem:
+    properties:
+      event_id:
+        type: integer
+      group_item_title:
+        type: string
+      history:
+        items:
+          $ref: '#/definitions/entities.QuizPricesHistoryDataItem'
+        type: array
+      market_id:
+        type: integer
+    type: object
+  entities.RealAuth:
+    properties:
+      approved_at:
+        description: 认证通过时间 (null 如果未通过)
+        type: string
+      auth_status:
+        description: '认证状态: "pending", "approved", "rejected"'
+        type: string
+      id:
+        type: integer
+      id_card:
+        description: 身份证号
+        type: string
+      phone_number:
+        description: 手机号
+        type: string
+      real_name:
+        description: 真实姓名
+        type: string
+      rejected_at:
+        description: 认证拒绝时间 (null 如果未拒绝)
+        type: string
+      uid:
+        description: 用户ID
+        type: integer
+    type: object
+  entities.RealNameAuthReq:
+    properties:
+      id_card:
+        description: 身份证号
+        type: string
+      real_name:
+        description: 真实姓名
+        type: string
+    type: object
+  entities.RechargeConfig:
+    properties:
+      channels:
+        items:
+          $ref: '#/definitions/entities.RechargeSetting'
+        type: array
+      goods:
+        items:
+          $ref: '#/definitions/entities.RechargeGood'
+        type: array
+      minRecharge:
+        type: number
+    type: object
+  entities.RechargeGood:
+    properties:
+      price:
+        type: integer
+      status:
+        description: 状态1是正常显示
+        type: integer
+    type: object
+  entities.RechargeSetting:
+    properties:
+      name:
+        type: string
+      status:
+        type: integer
+    type: object
+  entities.RechargeUrlInfo:
+    properties:
+      url:
+        type: string
+    type: object
+  entities.RegisterCredentials:
+    properties:
+      channel:
+        description: 渠道
+        example: ""
+        type: string
+      email:
+        description: 手机号，这里假设手机号是按照e164规则验证
+        example: 187884342432@gmail.com
+        minLength: 8
+        type: string
+      ic:
+        description: 邀请码
+        example: ""
+        type: string
+      isRobot:
+        type: integer
+      loginIP:
+        description: 登录IP，这里假设是IP格式验证
+        type: string
+      mobile:
+        description: 手机号，这里假设手机号是按照e164规则验证
+        example: "+91187884342432"
+        minLength: 9
+        type: string
+      password:
+        description: 密码
+        example: "123456"
+        maxLength: 64
+        minLength: 6
+        type: string
+      pc:
+        description: 分销码
+        example: ""
+        type: string
+      plat:
+        description: 平台
+        example: ""
+        type: string
+      status:
+        type: integer
+      telegram:
+        description: 电报
+        type: string
+      username:
+        description: 用户名
+        example: zhangsan
+        maxLength: 30
+        minLength: 3
+        type: string
+      verCode:
+        description: 验证码
+        type: string
+    required:
+    - password
+    - verCode
+    type: object
+  entities.ResetPasswordCredentials:
+    properties:
+      emailOrMobile:
+        description: 手机号
+        minLength: 8
+        type: string
+      password:
+        description: 密码
+        maxLength: 30
+        minLength: 6
+        type: string
+      verCode:
+        description: 验证码，这里假设是6位数的验证码
+        type: string
+    required:
+    - emailOrMobile
+    - password
+    - verCode
+    type: object
+  entities.SearchGameReq:
+    properties:
+      category:
+        type: string
+      count:
+        type: integer
+      list: {}
+      name:
+        description: 游戏名
+        type: string
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      status:
+        type: integer
+    type: object
+  entities.SendNotificationReq:
+    properties:
+      message:
+        description: 消息内容
+        type: string
+      params:
+        description: 模板消息参数
+        type: string
+      template_id:
+        description: 模板消息ID
+        type: integer
+      type:
+        description: '0: 普通消息, 1: 模板消息'
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.StateSyncReq:
+    properties:
+      betType:
+        description: 房间类型，
+        type: integer
+      periodID:
+        description: 期数ID，
+        type: string
+      state:
+        description: 状态，必填项
+        type: string
+    required:
+    - betType
+    - periodID
+    - state
+    type: object
+  entities.Transaction:
+    type: object
+  entities.UpdatePeriodReq:
+    properties:
+      betType:
+        description: 房间类型，可以为空
+        type: integer
+      number:
+        description: 数字，可以为空
+        type: integer
+      periodID:
+        description: 期数ID，可以为空
+        type: string
+    required:
+    - betType
+    - periodID
+    type: object
+  entities.UpdateRealNameAuthReq:
+    properties:
+      id_card:
+        description: 身份证号
+        type: string
+      real_name:
+        description: 真实姓名
+        type: string
+    type: object
+  entities.UpdateWalletPasswordReq:
+    properties:
+      confirm_password:
+        description: 确认密码，确保和新密码相同
+        type: string
+      newPassword:
+        description: 新密码，这里假设密码长度应在6到30个字符之间
+        maxLength: 30
+        minLength: 6
+        type: string
+      password:
+        description: 旧密码
+        type: string
+    required:
+    - confirm_password
+    - newPassword
+    - password
+    type: object
+  entities.UserProfile:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      channel:
+        description: 渠道
+        type: string
+      color:
+        description: 标记颜色
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      gender:
+        description: 性别
+        type: integer
+      ic:
+        description: 邀请码
+        type: string
+      ip:
+        description: 登录IP
+        type: string
+      mobile:
+        description: 手机号
+        type: string
+      nickname:
+        description: 昵称
+        type: string
+      pc:
+        description: 所属推销码
+        type: integer
+      status:
+        description: 用户状态
+        type: integer
+      summary:
+        $ref: '#/definitions/entities.FinancialSummary'
+      telegram:
+        description: 电报
+        type: string
+      uid:
+        type: integer
+      username:
+        description: 用户名
+        type: string
+      wallet:
+        $ref: '#/definitions/entities.UserWallet'
+    type: object
+  entities.UserWallet:
+    properties:
+      card:
+        description: 卡
+        type: integer
+      cash:
+        type: number
+      diamond:
+        description: 钻石
+        type: integer
+      id:
+        type: integer
+      pc:
+        description: 所属推销码
+        type: integer
+      securityLevel:
+        description: 安全等级，值为0、1、2表示不同的安全设置
+        type: integer
+      uid:
+        description: 为 UID 字段添加唯一索引
+        type: integer
+    type: object
+  entities.VerifyCodeReq:
+    properties:
+      business_type:
+        description: 业务类型 用户注册1,用户登录2,重置密码3,绑定手机4,绑定银行卡5,绑定邮箱6
+        example: 1
+        type: integer
+      target:
+        description: 手机号或者邮箱
+        example: 48576410@gmail.com
+        minLength: 8
+        type: string
+      verification_type:
+        description: 验证类型：1-邮箱，2-短信
+        example: 1
+        type: integer
+    required:
+    - business_type
+    - target
+    - verification_type
+    type: object
+  entities.WalletAddress:
+    properties:
+      active:
+        description: 是否激活（例如：是否允许交易）
+        type: boolean
+      address:
+        description: 区块链钱包地址
+        type: string
+      chain_type:
+        description: 地址类型（如 TRC20, ERC20）
+        type: string
+      id:
+        type: integer
+      token_symbol:
+        description: 代币类型（如 USDT, ETH）
+        type: string
+      uid:
+        description: 关联的用户ID
+        type: integer
+    type: object
+  entities.WingoOrder:
+    properties:
+      balance:
+        description: 下注后余额
+        type: number
+      betAmount:
+        description: 投注金额
+        type: number
+      betTime:
+        description: 投注时间
+        type: integer
+      betType:
+        description: 房间类型  同时作为复合索引的一部分
+        type: integer
+      color:
+        type: integer
+      delivery:
+        description: 下注减抽水
+        type: number
+      fee:
+        description: 抽水
+        type: number
+      finishTime:
+        description: 单的应完成结算时间
+        type: integer
+      id:
+        type: integer
+      number:
+        description: 实际开奖数字
+        type: integer
+      periodID:
+        description: 期数
+        type: string
+      price:
+        description: 模拟计算的爆奖额
+        type: number
+      rewardAmount:
+        description: 中奖金额
+        type: number
+      status:
+        description: 是否已经结算
+        type: integer
+      ticketNumber:
+        description: 彩票ID 选的数字
+        type: integer
+      uid:
+        description: 用户ID 注意索引的名称和排序字段
+        type: integer
+      username:
+        type: string
+    type: object
+  entities.WingoOrderHistoryReq:
+    properties:
+      betType:
+        description: 房间类型，可以为空
+        type: integer
+      count:
+        type: integer
+      list: {}
+      page:
+        type: integer
+      pageSize:
+        type: integer
+      uid:
+        type: integer
+    required:
+    - betType
+    type: object
+  entities.WingoOrderReq:
+    properties:
+      betAmount:
+        description: 投注金额
+        type: integer
+      betType:
+        description: 房间类型
+        type: integer
+      periodID:
+        description: 期数ID，omitempty表示若字段为空，则不显示在JSON中
+        type: string
+      ticketNumber:
+        description: 彩票数字，注意这里JSON标记要与struct中的字段名称匹配
+        type: integer
+      uid:
+        description: 平台用户ID
+        type: integer
+    required:
+    - betAmount
+    - betType
+    - periodID
+    type: object
+  entities.WingoPeriod:
+    properties:
+      betType:
+        description: 房间类型
+        type: integer
+      endTime:
+        description: 结束时间
+        type: integer
+      id:
+        type: integer
+      number:
+        description: 开的数字
+        type: integer
+      periodID:
+        description: 期数
+        type: string
+      periodIndex:
+        description: 期数序号
+        type: integer
+      price:
+        description: 模拟计算的爆奖额
+        type: number
+      rate:
+        description: 抽水
+        type: integer
+      startTime:
+        description: 开始时间
+        type: integer
+      status:
+        description: 状态
+        type: integer
+    type: object
+  entities.WingoRoomResp:
+    properties:
+      id:
+        description: ID
+        type: integer
+      nowSTime:
+        description: 当前时间
+        type: integer
+      periodID:
+        description: 期数ID
+        type: string
+      periodIndex:
+        description: 期数索引
+        type: integer
+      playerCount:
+        description: 玩家数目
+        type: integer
+      roundSTime:
+        description: 回合时间
+        type: integer
+      setting:
+        allOf:
+        - $ref: '#/definitions/entities.WingoRoomSetting'
+        description: 设置
+      state:
+        description: 状态
+        type: string
+      stateSTime:
+        description: 状态时间
+        type: integer
+    type: object
+  entities.WingoRoomSetting:
+    properties:
+      betType:
+        description: 房间类型
+        type: integer
+      bettingInterval:
+        description: 投注时长
+        type: integer
+      currency:
+        description: 货币
+        type: string
+      rate:
+        description: 抽水比例
+        type: integer
+      roundInterval:
+        description: 回合时间
+        type: integer
+      settleInterval:
+        description: 结算投注时长
+        type: integer
+      status:
+        description: 状态
+        type: integer
+      stopBettingInterval:
+        description: 停止投注时长
+        type: integer
+    type: object
+  entities.WithdrawCard:
+    properties:
+      accountNumber:
+        type: string
+      active:
+        description: 是否正在使用 0不是 1是
+        type: integer
+      address:
+        type: string
+      city:
+        type: string
+      email:
+        description: 20220202 可选字段
+        type: string
+      id:
+        type: integer
+      ifsc:
+        type: string
+      mobile:
+        type: string
+      name:
+        type: string
+      remark:
+        description: 20220202 可选字段
+        type: string
+      state:
+        type: string
+      status:
+        description: 状态 0删除 1正常
+        type: integer
+      uid:
+        type: integer
+    type: object
+  entities.WithdrawDetail:
+    properties:
+      cards:
+        items:
+          $ref: '#/definitions/entities.WithdrawCard'
+        type: array
+      max_withdraw:
+        type: number
+      min_withdraw:
+        type: number
+      recharge_all:
+        type: number
+      withdraw_cash:
+        type: number
+    type: object
+  ginx.Resp:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error:
+        description: 当Msg为空时，"error"键将不会出现在JSON中
+        type: string
+    type: object
+  hash.GameState:
+    properties:
+      betLockTime:
+        type: string
+      currentHeight:
+        type: integer
+      lastBlockHeight:
+        type: integer
+      lastRoundResult:
+        $ref: '#/definitions/hash.RoundResult'
+      nextBlockHeight:
+        type: integer
+      remainingTime:
+        type: integer
+      roundStatus:
+        type: string
+    type: object
+  hash.RoundResult:
+    properties:
+      blockHash:
+        type: string
+      blockHeight:
+        type: integer
+      error:
+        description: 新增错误信息字段
+        type: string
+      result:
+        description: 游戏结果
+    type: object
+info:
+  contact: {}
+  description: rk-api
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: rk-api
+  version: 1.0.0
+paths:
+  /api/activity/get-activity-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取活动列表信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 活动信息
+          schema:
+            items:
+              $ref: '#/definitions/entities.Activity'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取活动列表信息
+      tags:
+      - Activity
+  /api/activity/get-banner-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取banner列表信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: banner信息
+          schema:
+            items:
+              $ref: '#/definitions/entities.Banner'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取banner列表信息
+      tags:
+      - Activity
+  /api/activity/get-logo-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取logo图片信息
+      parameters:
+      - default: 1
+        description: logo类型 (1.平台主界面左上角 2.平台跳转游戏加载页 3.游戏加载页)
+        in: query
+        name: logoType
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: logo信息
+          schema:
+            items:
+              $ref: '#/definitions/entities.Logo'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取logo图片信息
+      tags:
+      - Activity
+  /api/agent/get-game-rabate-receipt-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取领取的佣金记录
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetGameRebateReceiptListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.GameRebateReceipt'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取领取的佣金记录
+      tags:
+      - Agent
+  /api/agent/get-promotion-link:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取推广链接
+      tags:
+      - Agent
+  /api/agent/get-promotion-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetPromotionListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.HallInviteRelation'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取推广列表
+      tags:
+      - Agent
+  /api/agent/get-promotion-profit:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.PromotionProfit'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取推广盈利信息
+      tags:
+      - Agent
+  /api/agent/get-return-cash:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取返利
+      tags:
+      - Agent
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.LoginCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 登录
+      tags:
+      - Auth
+  /api/auth/logout:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 退出登录
+      tags:
+      - Auth
+  /api/auth/mobile-login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MobileLoginCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 登录
+      tags:
+      - Auth
+  /api/auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RegisterCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 注册用户
+      tags:
+      - Auth
+  /api/auth/reset-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.ResetPasswordCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 重置密码
+      tags:
+      - Auth
+  /api/auth/update-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.ChangePasswordCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 更改密码
+      tags:
+      - Auth
+  /api/blockchain/create-wallet-address:
+    post:
+      consumes:
+      - application/json
+      description: 创建新的钱包地址
+      parameters:
+      - description: 钱包地址
+        in: body
+        name: wallet_address
+        required: true
+        schema:
+          $ref: '#/definitions/entities.WalletAddress'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: 创建钱包地址
+      tags:
+      - Chain
+  /api/blockchain/delete-wallet-address:
+    post:
+      consumes:
+      - application/json
+      description: 删除指定钱包地址
+      parameters:
+      - description: 钱包地址ID
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.IDReq'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: 删除钱包地址
+      tags:
+      - Chain
+  /api/blockchain/get-blockchain-token:
+    post:
+      consumes:
+      - application/json
+      description: 获取指定区块链代币的信息
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetBlockchainTokenReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 区块链代币信息
+          schema:
+            $ref: '#/definitions/entities.BlockchainToken'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取区块链代币
+      tags:
+      - Chain
+  /api/blockchain/get-blockchain-token-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有区块链代币列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 区块链代币信息
+          schema:
+            items:
+              $ref: '#/definitions/entities.BlockchainToken'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取区块链代币列表
+      tags:
+      - Chain
+  /api/blockchain/get-wallet-address:
+    post:
+      consumes:
+      - application/json
+      description: 获取指定用户的区块链钱包地址
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetWalletAddressReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 钱包地址信息
+          schema:
+            $ref: '#/definitions/entities.WalletAddress'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取钱包地址
+      tags:
+      - Chain
+  /api/blockchain/get-wallet-address-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取用户的钱包地址列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户钱包地址
+          schema:
+            items:
+              $ref: '#/definitions/entities.WalletAddress'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户的钱包地址列表
+      tags:
+      - Chain
+  /api/chat/get-channel-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有可用的聊天频道列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.ChatChannel'
+            type: array
+      summary: 获取所有可用聊天频道列表
+      tags:
+      - Chat
+  /api/chat/get-history:
+    post:
+      consumes:
+      - application/json
+      description: 获取指定频道的历史聊天记录
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetMessageHistoryReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.ChatMessage'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取聊天频道历史记录
+      tags:
+      - Chat
+  /api/chat/join-channel:
+    post:
+      consumes:
+      - application/json
+      description: 用户加入指定的聊天频道
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.JoinChannelReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 加入一个聊天频道
+      tags:
+      - Chat
+  /api/chat/send-message:
+    post:
+      consumes:
+      - application/json
+      description: 发送聊天信息
+      parameters:
+      - description: Message
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/entities.ChatMessage'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 发送聊天信息
+      tags:
+      - Chat
+  /api/chat/upload-image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上传并保存聊天图片
+      parameters:
+      - description: Image File
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 上传聊天图片
+      tags:
+      - Chat
+  /api/chat/ws:
+    get:
+      consumes:
+      - application/json
+      description: 与聊天服务器建立 WebSocket new WebSocket("ws://url:port/api/chat/ws?token=xxx");
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: WebSocket connection established
+          schema:
+            type: string
+      summary: WebSocket 连接建立
+      tags:
+      - Chat
+  /api/crashgame/cancel-crash-game-bet:
+    post:
+      description: 取消crash游戏下注
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.CancelCrashGameBetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 取消crash游戏下注
+      tags:
+      - crash游戏
+  /api/crashgame/escape-crash-game-bet:
+    post:
+      description: 逃跑crash游戏
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.EscapeCrashGameBetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏订单
+          schema:
+            $ref: '#/definitions/entities.CrashGameOrder'
+      security:
+      - ApiKeyAuth: []
+      summary: 逃跑crash游戏
+      tags:
+      - crash游戏
+  /api/crashgame/get-crash-game-round:
+    post:
+      description: 获取crash游戏状态
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetCrashGameRoundReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.GetCrashGameRoundRsp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取crash游戏状态
+      tags:
+      - crash游戏
+  /api/crashgame/get-crash-game-round-list:
+    post:
+      description: 获取crash游戏历史记录
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetCrashGameRoundListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合列表
+          schema:
+            $ref: '#/definitions/entities.GetCrashGameRoundListRsp'
+      summary: 获取crash游戏历史记录
+      tags:
+      - crash游戏
+  /api/crashgame/get-crash-game-round-order-list:
+    post:
+      description: 获取crash游戏下注列表
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetCrashGameRoundOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合下注列表
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/entities.CrashGameOrder'
+              type: array
+            type: array
+      summary: 获取crash游戏下注列表
+      tags:
+      - crash游戏
+  /api/crashgame/get-user-crash-game-order:
+    post:
+      description: 获取用户crash游戏下注
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetUserCrashGameOrderReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回用户游戏回合下注
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/entities.CrashGameOrder'
+              type: array
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户crash游戏下注
+      tags:
+      - crash游戏
+  /api/crashgame/get-user-crash-game-order-list:
+    post:
+      description: 获取用户crash游戏下注列表
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetUserCrashGameOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回用户游戏回合下注列表
+          schema:
+            $ref: '#/definitions/entities.GetUserCrashGameOrderListRsp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户crash游戏下注列表
+      tags:
+      - crash游戏
+  /api/crashgame/place-crash-game-bet:
+    post:
+      description: 下注crash游戏
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.PlaceCrashGameBetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏订单
+          schema:
+            $ref: '#/definitions/entities.CrashGameOrder'
+      security:
+      - ApiKeyAuth: []
+      summary: 下注crash游戏
+      tags:
+      - crash游戏
+  /api/crashgame/ws:
+    get:
+      consumes:
+      - application/json
+      description: 与crash服务器建立 WebSocket new WebSocket("ws://url:port/api/crashgame/ws?token=xxx");
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合下注
+          schema:
+            $ref: '#/definitions/entities.CrashGameOrderNotify'
+      security:
+      - ApiKeyAuth: []
+      summary: WebSocket 连接建立
+      tags:
+      - crash游戏
+  /api/dicegame/dice-game-change-seed:
+    post:
+      description: 切换种子
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.DiceGameChangeSeedReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.DiceGameChangeSeedRsp'
+      security:
+      - ApiKeyAuth: []
+      summary: 切换种子
+      tags:
+      - dice游戏
+  /api/dicegame/dice-game-get-order-list:
+    post:
+      description: 获取dice游戏下注列表
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.DiceGameGetOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/entities.DiceGameState'
+              type: array
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取dice游戏下注列表
+      tags:
+      - dice游戏
+  /api/dicegame/dice-game-place-bet:
+    post:
+      description: 下注
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.DiceGamePlaceBetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.DiceGameState'
+      security:
+      - ApiKeyAuth: []
+      summary: 下注
+      tags:
+      - dice游戏
+  /api/flow/get-flow-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetFlowListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.Flow'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取流水列表
+      tags:
+      - Flow
+  /api/game/get-game-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetGameListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.Game'
+                  type: array
+              type: object
+      summary: 获取游戏列表
+      tags:
+      - Game
+  /api/game/refresh-game-list:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.GameRefresh'
+                  type: array
+              type: object
+      summary: 刷新游戏动态数据 ,比如在线人数等等
+      tags:
+      - Game
+  /api/game/search:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.SearchGameReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.Game'
+                  type: array
+              type: object
+      summary: 搜索游戏
+      tags:
+      - Game
+  /api/hashgame/fire-check:
+    post:
+      description: 公平性检查
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.FairCheckReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏结果
+          schema:
+            $ref: '#/definitions/entities.FairCheckRsp'
+      summary: 公平性检查
+      tags:
+      - hash游戏
+  /api/jhszgame/launch:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.JhszGameLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 登录启动游戏
+      tags:
+      - Jhsz
+  /api/jhszgame/send-notification:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.SendNotificationReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 发送通知(内部用,前端不需要接入)
+      tags:
+      - Jhsz
+  /api/limbogame/limbo-game-change-seed:
+    post:
+      description: 切换种子
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.LimboGameChangeSeedReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.LimboGameChangeSeedRsp'
+      security:
+      - ApiKeyAuth: []
+      summary: 切换种子
+      tags:
+      - limbo游戏
+  /api/limbogame/limbo-game-get-order-list:
+    post:
+      description: 获取Limbo游戏下注列表
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.LimboGameGetOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/entities.LimboGameState'
+              type: array
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取Limbo游戏下注列表
+      tags:
+      - limbo游戏
+  /api/limbogame/limbo-game-place-bet:
+    post:
+      description: 下注
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.LimboGamePlaceBetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.LimboGameState'
+      security:
+      - ApiKeyAuth: []
+      summary: 下注
+      tags:
+      - limbo游戏
+  /api/minegame/mine-game-cashout:
+    post:
+      description: 兑现
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MineGameCashoutReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.MineGameState'
+      security:
+      - ApiKeyAuth: []
+      summary: 兑现
+      tags:
+      - mine游戏
+  /api/minegame/mine-game-change-seed:
+    post:
+      description: 切换种子
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MineGameChangeSeedReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.MineGameChangeSeedRsp'
+      security:
+      - ApiKeyAuth: []
+      summary: 切换种子
+      tags:
+      - mine游戏
+  /api/minegame/mine-game-get-order-list:
+    post:
+      description: 获取mine游戏下注列表
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MineGameGetOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/entities.MineGameState'
+              type: array
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取mine游戏下注列表
+      tags:
+      - mine游戏
+  /api/minegame/mine-game-get-state:
+    post:
+      description: 获取mine游戏状态
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MineGameGetStateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.MineGameState'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取mine游戏状态
+      tags:
+      - mine游戏
+  /api/minegame/mine-game-open-position:
+    post:
+      description: 开启位置
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MineGameOpenPositionReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.MineGameState'
+      security:
+      - ApiKeyAuth: []
+      summary: 开启位置
+      tags:
+      - mine游戏
+  /api/minegame/mine-game-place-bet:
+    post:
+      description: 下注
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.MineGamePlaceBetReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏回合
+          schema:
+            $ref: '#/definitions/entities.MineGameState'
+      security:
+      - ApiKeyAuth: []
+      summary: 下注
+      tags:
+      - mine游戏
+  /api/notification/get-notification-list:
+    post:
+      consumes:
+      - application/json
+      description: 根据用户ID获取通知列表，支持分页查询
+      parameters:
+      - description: 请求参数
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetNotificationListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回分页数据
+          schema:
+            $ref: '#/definitions/entities.Paginator'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取通知列表
+      tags:
+      - Notification
+  /api/notification/get-unread-notification-count:
+    post:
+      consumes:
+      - application/json
+      description: 获取用户的未读通知数量
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 获取未读通知数量
+      tags:
+      - Notification
+  /api/notification/mark-all-as-read:
+    post:
+      consumes:
+      - application/json
+      description: 根据用户ID标记所有未读通知为已读
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: 标记所有未读通知为已读
+      tags:
+      - Notification
+  /api/notification/mark-as-read:
+    post:
+      consumes:
+      - application/json
+      description: 根据通知ID标记指定通知为已读
+      parameters:
+      - description: 通知ID
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.IDReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 标记通知为已读
+      tags:
+      - Notification
+  /api/oauth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 第三方登录
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.OAuthLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 第三方登录
+      tags:
+      - Oauth
+  /api/plat/get-platform:
+    post:
+      consumes:
+      - application/json
+      description: 获取平台配置信息,汇率点等
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.PlatSetting'
+      summary: 获取平台配置信息
+      tags:
+      - Plat
+  /api/quiz/get-quiz-buy-record:
+    post:
+      consumes:
+      - application/json
+      description: 获取竞猜购买记录
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.QuizBuyRecordReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.QuizBuyRecord'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取竞猜购买记录
+      tags:
+      - Quiz
+  /api/quiz/get-quiz-info:
+    post:
+      consumes:
+      - application/json
+      description: 获取竞猜信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.QuizInfoRsp'
+      summary: 获取竞猜信息
+      tags:
+      - Quiz
+  /api/quiz/get-quiz-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取竞猜信息
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.QuizListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.QuizInfoRsp'
+            type: array
+      summary: 获取竞猜信息
+      tags:
+      - Quiz
+  /api/quiz/get-quiz-market-prices-history:
+    post:
+      consumes:
+      - application/json
+      description: 竞猜市场价格历史
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.QuizMarketPricesHistoryReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.QuizPricesHistoryRspItem'
+      summary: 竞猜市场价格历史
+      tags:
+      - Quiz
+  /api/quiz/get-quiz-prices-history:
+    post:
+      consumes:
+      - application/json
+      description: 竞猜价格历史
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.QuizPricesHistoryReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.QuizPricesHistoryRsp'
+      summary: 竞猜价格历史
+      tags:
+      - Quiz
+  /api/quiz/quiz-buy:
+    post:
+      consumes:
+      - application/json
+      description: 竞猜购买
+      parameters:
+      - description: params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.QuizBuyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.QuizBuyRecord'
+      security:
+      - ApiKeyAuth: []
+      summary: 竞猜购买
+      tags:
+      - Quiz
+  /api/real/commit-real-auth:
+    post:
+      consumes:
+      - application/json
+      description: 提交实名认证信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.RealNameAuthReq'
+      security:
+      - ApiKeyAuth: []
+      summary: 提交实名认证信息
+      tags:
+      - Real
+  /api/real/get-real-auth:
+    post:
+      consumes:
+      - application/json
+      description: 获取实名认证信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.RealAuth'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取实名认证信息
+      tags:
+      - Real
+  /api/real/update-real-auth:
+    post:
+      consumes:
+      - application/json
+      description: 更新实名认证信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.UpdateRealNameAuthReq'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新实名认证信息
+      tags:
+      - Real
+  /api/recharge/get-recharge-config:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.RechargeConfig'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取充值渠道配置
+      tags:
+      - Recharge
+  /api/recharge/get-recharge-order-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetRechargeOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.HallWithdrawRecord'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取充值表
+      tags:
+      - Recharge
+  /api/recharge/get-recharge-url:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetRechargeUrlReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.RechargeUrlInfo'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取充值地址信息
+      tags:
+      - Recharge
+  /api/sdgame/get-sd-game-state:
+    post:
+      description: 通过 betType 获取指定房间的游戏状态信息
+      parameters:
+      - default: 1
+        description: 房间类型 (1 初级 2 中级 3 高级)
+        in: query
+        name: betType
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回游戏状态
+          schema:
+            $ref: '#/definitions/hash.GameState'
+      summary: 获取单双游戏房间状态
+      tags:
+      - SDGame
+  /api/sdgame/place-sd-bet:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.HashSDBetRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 单双投注
+      tags:
+      - SDGame
+  /api/stats/get-category-stats-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取游戏类比统计列表数据
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetCategoryStatsListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.GameCategoryStats'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取游戏类比统计列表数据
+      tags:
+      - Stats[统计]
+  /api/stats/get-game-record-list:
+    post:
+      consumes:
+      - application/json
+      description: 获取游戏记录详情列表数据
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetGameRecordListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.GameRecord'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取游戏记录详情列表数据
+      tags:
+      - Stats[统计]
+  /api/stats/get-game-stats:
+    post:
+      consumes:
+      - application/json
+      description: 获取游戏统计数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.GameStats'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取游戏统计数据
+      tags:
+      - Stats[统计]
+  /api/stats/get-gamer-daily-stats-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询条件
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetGamerDailyStatsListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.GetGamerDailyStatsListRsp'
+      security:
+      - ApiKeyAuth: []
+      summary: 玩家每日统计数据列表
+      tags:
+      - Stats[统计]
+  /api/stats/get-gamer-profit-leaderboard:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.GameProfitStats'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: 获取某玩家游戏盈利排行
+      tags:
+      - Stats[统计]
+  /api/stats/get-profit-leaderboard:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.GameProfitStats'
+            type: array
+      summary: 获取所有玩家游戏盈利排行
+      tags:
+      - Stats[统计]
+  /api/transaction/get-transaction-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetTransactionListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Transaction'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取交易记录列表
+      tags:
+      - Transaction
+  /api/user/bind-email:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.BindEmailReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 绑定email
+      tags:
+      - User
+  /api/user/bind-telegram:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.BindTelegramReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 绑定telegram
+      tags:
+      - User
+  /api/user/edit-avatar:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.EditAvatarReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑头像
+      tags:
+      - User
+  /api/user/edit-nickname:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.EditNicknameReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑昵称
+      tags:
+      - User
+  /api/user/get-red-envelope:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetRedEnvelopeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 抢红包
+      tags:
+      - User
+  /api/user/get-user-info:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.UserProfile'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户信息
+      tags:
+      - User
+  /api/user/upload-avatar:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 上传的头像文件
+        in: formData
+        name: avatar
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 上传头像
+      tags:
+      - User
+  /api/verify/send-verify-code:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.VerifyCodeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      summary: 发送验证码
+      tags:
+      - Verify
+  /api/wallet/enable-wallet-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.EnableWalletPasswordReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 启用资金密码
+      tags:
+      - Wallet
+  /api/wallet/get-user-wallet:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.UserWallet'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取钱包
+      tags:
+      - Wallet
+  /api/wallet/update-wallet-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UpdateWalletPasswordReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 更新资金密码
+      tags:
+      - Wallet
+  /api/wingo/admin/get-period-bet-info:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.IDReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 获取当前期投注信息
+      tags:
+      - Wingo
+  /api/wingo/admin/get-period-player-orders:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.WingoOrderReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.WingoOrder'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取当前期玩家投注订单列表
+      tags:
+      - Wingo
+  /api/wingo/admin/update-period-number:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.UpdatePeriodReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新当前期中奖数字
+      tags:
+      - Wingo
+  /api/wingo/create-order:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.WingoOrderReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.WingoOrder'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建投注单
+      tags:
+      - Wingo
+  /api/wingo/get-room:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.IDReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.WingoRoomResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取房间信息
+      tags:
+      - Wingo
+  /api/wingo/recent-order-history-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.WingoOrderHistoryReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.WingoOrder'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取最近历史玩家订单列表
+      tags:
+      - Wingo
+  /api/wingo/recent-period-history-list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.GetPeriodHistoryListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.WingoPeriod'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取最近历史期数列表
+      tags:
+      - Wingo
+  /api/wingo/state-sync:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.StateSyncReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.WingoRoomResp'
+      security:
+      - ApiKeyAuth: []
+      summary: 同步状态
+      tags:
+      - Wingo
+  /api/withdraw/add-withdraw-card:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.AddWithdrawCardReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 添加提现银行卡
+      tags:
+      - Withdraw
+  /api/withdraw/apply-for-withdrawal:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.ApplyForWithdrawalReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 申请提现
+      tags:
+      - Withdraw
+  /api/withdraw/del-withdraw-card:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.IDReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除银行卡
+      tags:
+      - Withdraw
+  /api/withdraw/get-withdraw-card-list:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.WithdrawCard'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取玩家提现银行卡列表
+      tags:
+      - Withdraw
+  /api/withdraw/get-withdraw-detail:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.WithdrawDetail'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取提现详情
+      tags:
+      - Withdraw
+  /api/withdraw/get-withdraw-record-list:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/entities.Paginator'
+            - properties:
+                List:
+                  items:
+                    $ref: '#/definitions/entities.HallWithdrawRecord'
+                  type: array
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取玩家提现记录
+      tags:
+      - Withdraw
+  /api/withdraw/select-withdraw-card:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: params
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entities.IDReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ginx.Resp'
+      security:
+      - ApiKeyAuth: []
+      summary: 选择需要使用的银行卡
+      tags:
+      - Withdraw
+  /oauth/github/callback:
+    get:
+      responses: {}
+      summary: github登录回调
+      tags:
+      - oauth
+  /oauth/google/callback:
+    get:
+      responses: {}
+      summary: google登录回调
+      tags:
+      - oauth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邮箱验证码</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+        .content h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .code {
+            font-size: 28px;
+            font-weight: bold;
+            color: #007bff;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+            display: inline-block;
+            width: 100%;
+        }
+        .footer {
+            background-color: #f5f5f5;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #666666;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>验证您的邮箱</h1>
+        </div>
+
+        <!-- 内容 -->
+        <div class="content">
+            <h2>亲爱的用户，您好！</h2>
+            <p>您正在使用邮箱验证码功能，请查收您的验证码：</p>
+            <div class="code">{{.Code}}</div>
+            请在 <strong>5 分钟</strong> 内完成验证。</p>
+            <p>如果您未进行此操作，请忽略此邮件。</p>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>此为系统邮件，请勿直接回复。</p>
+        </div>
+    </div>
+</body>
+</html>

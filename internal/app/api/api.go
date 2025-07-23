@@ -1,0 +1,37 @@
+package api
+
+import "github.com/google/wire"
+
+var APISet = wire.NewSet(
+	ActivityAPISet,
+	AgentAPISet,
+	FlowAPISet,
+	NineAPISet,
+	RechargeAPISet,
+	UserAPISet,
+	WingoAPISet,
+	WithdrawAPISet,
+	QuizAPISet,
+	R8APISet,
+	ZfAPISet,
+	AdminAPISet,
+	GameAPISet,
+	OauthAPISet,
+	AuthAPISet,
+	VerifyAPISet,
+	JhszAPISet,
+	ChainAPISet,
+	WalletAPISet,
+	NotificationAPISet,
+	ChatAPISet,
+	PlatAPISet,
+	RealAPISet,
+	TransactionAPISet,
+	StatsAPISet,
+	HashGameAPISet,
+	SDGameAPISet,
+	CrashGameAPISet,
+	MineGameAPISet,
+	DiceGameAPISet,
+	LimboGameAPISet,
+) // end

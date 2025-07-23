@@ -1,0 +1,26 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-t'
+      - '$_DOCKER_REPO/platform-api:latest'
+      - ./
+    id: Build Docker Image
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - '$_DOCKER_REPO/platform-api:latest'
+    id: Push Docker Image
+  - name: 'google/cloud-sdk:latest'
+    args:
+      - '-xe'
+      - '-c'
+      - >
+        gcloud deploy releases create app-release-$(date +%Y%m%d%H%M%S)-$(git rev-parse --short HEAD) \
+            --project=$PROJECT_ID \
+            --region=$LOCATION \
+            --delivery-pipeline=platform-api-pipeline \
+            --skaffold-file=skaffold.yaml
+    entrypoint: sh
+options:
+  logging: CLOUD_LOGGING_ONLY

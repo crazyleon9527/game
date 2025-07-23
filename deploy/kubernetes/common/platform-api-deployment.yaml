@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-api-deployment
+  namespace: hashrace-game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platform-api
+  template:
+    metadata:
+      labels:
+        app: platform-api
+    spec:
+      containers:
+        - name: platform-api-container
+          image: asia-docker.pkg.dev/hashrace-game/hashrace-docker-asia-repo/platform-api:latest
+          ports:
+            - containerPort: 3001 # 与 Dockerfile 中 EXPOSE 的端口一致
+              name: http
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2000Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 40
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP

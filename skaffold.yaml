@@ -1,0 +1,25 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+build:
+  tagPolicy:
+    gitCommit: {}
+  local: {}
+
+# 默认配置，通常用于 dev 环境
+manifests:
+  rawYaml:
+    - ./deploy/kubernetes/common/* # 包含公共资源
+    - ./deploy/kubernetes/dev/* # 包含 dev 特有资源，如 configmap
+
+deploy:
+  kubectl: {}
+  logs:
+    prefix: container
+
+profiles:
+  - name: prod # 定义一个名为 'prod' 的 Profile
+    manifests:
+      rawYaml:
+        - ./deploy/kubernetes/common/* # prod 环境只包含公共资源，不包含 dev 特有 configmap
+    # deploy: # 如果 prod 环境有不同的部署策略，也可以在这里定义
+    #   kubectl: {}

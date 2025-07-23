@@ -1,0 +1,17 @@
+# 这是 Google Kubernetes Engine (GKE) 特有的自定义资源。
+# 它不是标准的 Kubernetes API 对象，而是 GKE 扩展的一部分。
+#
+# Kind: ManagedCertificate
+# 作用: 告诉 GKE 的 Ingress 控制器自动为指定的域名获取和管理 SSL/TLS 证书。
+#      这些证书由 Google 自动颁发、续订和部署到 Google Cloud HTTP(S) 负载均衡器。
+# 注意事项：https://github.com/hashrace/tech-specs/blob/main/gcloud/managed-certificate-checklist.md
+#
+# ----------------------------------------------------------------------
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+    name: platform-api-managed-cert
+    namespace: hashrace-game
+spec:
+    domains:
+        - platform-api.hashrace.dev
